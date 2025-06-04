@@ -16,24 +16,14 @@ public class OrderRepository extends JDBConnection {
 	 */
 	public int insert(Order order) {
 		int result = 0;
-        String sql = "INSERT INTO `order` "
-        		+ "(order_no, ship_name, zip_code, country, address, date, order_pw, user_id, total_price, phone) "
-        		+ "VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO `order` (user_id, order_pw, phone) VALUES (?, ?, ?)";
         try {
             psmt = con.prepareStatement(sql);
-            psmt.setInt(1, order.getOrderNo());
-            psmt.setString(2, order.getShipName());
-            psmt.setString(3, order.getZipCode());
-            psmt.setString(4, order.getCountry());
-            psmt.setString(5, order.getAddress());
-            psmt.setString(6, order.getDate());
-            psmt.setString(7, order.getOrderPw());
-            psmt.setString(8, order.getUserId());
-            psmt.setInt(9, order.getTotalPrice());
-            psmt.setString(10, order.getPhone());
+            psmt.setString(1, order.getUserId());
+            psmt.setString(2, order.getOrderPw());
+            psmt.setString(3, order.getPhone());
             result = psmt.executeUpdate();
         } catch (SQLException e) {
-            System.err.println("[주문 등록] 오류 발생");
             e.printStackTrace();
         }
         return result;
@@ -53,7 +43,6 @@ public class OrderRepository extends JDBConnection {
                 orderNo = rs.getInt(1);
             }
         } catch (SQLException e) {
-            System.err.println("[최근 주문번호 조회] 오류 발생");
             e.printStackTrace();
         }
         return orderNo;
@@ -67,21 +56,16 @@ public class OrderRepository extends JDBConnection {
 	 */
 	public List<Product> list(String userId) {
 		List<Product> list = new ArrayList<>();
-        String sql = "SELECT p.product_id, p.product_name, p.price, o.order_cnt FROM product p, order_detail o, `order` od WHERE p.product_id = o.product_id AND o.order_no = od.order_no AND od.user_id = ?";
+        String sql = "SELECT p.* FROM product p JOIN order_detail od ON p.product_id = od.product_id JOIN `order` o ON od.order_no = o.order_no WHERE o.user_id = ?";
         try {
             psmt = con.prepareStatement(sql);
             psmt.setString(1, userId);
             rs = psmt.executeQuery();
             while (rs.next()) {
                 Product product = new Product();
-                product.setProductId(rs.getString("product_id"));
-                product.setProductName(rs.getString("product_name"));
-                product.setPrice(rs.getInt("price"));
-                product.setOrderCnt(rs.getInt("order_cnt"));
                 list.add(product);
             }
         } catch (SQLException e) {
-            System.err.println("[회원 주문 내역 조회] 오류 발생");
             e.printStackTrace();
         }
         return list;
@@ -96,7 +80,7 @@ public class OrderRepository extends JDBConnection {
 	public List<Product> list(String phone, String orderPw) {
 		
 		List<Product> list = new ArrayList<>();
-        String sql = "SELECT p.product_id, p.product_name, p.price, o.order_cnt FROM product p, order_detail o, `order` od WHERE p.product_id = o.product_id AND o.order_no = od.order_no AND od.order_phone = ? AND od.order_pw = ?";
+        String sql = "SELECT p.* FROM product p JOIN order_detail od ON p.product_id = od.product_id JOIN `order` o ON od.order_no = o.order_no WHERE o.phone = ? AND o.order_pw = ?";
         try {
             psmt = con.prepareStatement(sql);
             psmt.setString(1, phone);
@@ -104,14 +88,9 @@ public class OrderRepository extends JDBConnection {
             rs = psmt.executeQuery();
             while (rs.next()) {
                 Product product = new Product();
-                product.setProductId(rs.getString("product_id"));
-                product.setProductName(rs.getString("product_name"));
-                product.setPrice(rs.getInt("price"));
-                product.setOrderCnt(rs.getInt("order_cnt"));
                 list.add(product);
             }
         } catch (SQLException e) {
-            System.err.println("[비회원 주문 내역 조회] 오류 발생");
             e.printStackTrace();
         }
         return list;

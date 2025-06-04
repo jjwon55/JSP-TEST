@@ -16,15 +16,14 @@ public class ProductIORepository extends JDBConnection {
 	 */
 	public int insert(Product product) {
 		int result = 0;
-        String sql = "INSERT INTO product_io (product_id, amount, type) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO product_io (product_id, amount, status) VALUES (?, ?, ?)";
         try {
             psmt = con.prepareStatement(sql);
             psmt.setString(1, product.getProductId());
             psmt.setInt(2, product.getAmount());
-            psmt.setString(3, product.getType());
+            psmt.setString(3, product.getStatus());
             result = psmt.executeUpdate();
         } catch (SQLException e) {
-            System.err.println("[상품 입출고 등록] 오류 발생");
             e.printStackTrace();
         }
         return result;

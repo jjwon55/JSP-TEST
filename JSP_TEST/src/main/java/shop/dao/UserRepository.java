@@ -4,7 +4,6 @@ import java.sql.SQLException;
 import java.util.UUID;
 
 import shop.dto.PersistentLogin;
-import shop.dto.Product;
 import shop.dto.User;
 
 public class UserRepository extends JDBConnection {
@@ -16,21 +15,24 @@ public class UserRepository extends JDBConnection {
 	 */
 	public int insert(User user) {
 		int result = 0;
-        String sql = "INSERT INTO user (id, password, name, phone, birth, gender) VALUES (?, ?, ?, ?, ?, ?)";
-        try {
-            psmt = con.prepareStatement(sql);
-            psmt.setString(1, user.getId());
-            psmt.setString(2, user.getPassword());
-            psmt.setString(3, user.getName());
-            psmt.setString(4, user.getPhone());
-            psmt.setString(5, user.getBirth());
-            psmt.setString(6, user.getGender());
-            result = psmt.executeUpdate();
-        } catch (SQLException e) {
-            System.err.println("회원 등록 중 오류 발생");
-            e.printStackTrace();
-        }
-        return result;
+	    String sql = "INSERT INTO user (id, password, name, gender, birth, mail, phone, address, regist_day) "
+	               + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW())";
+	    try {
+	        psmt = con.prepareStatement(sql);
+	        psmt.setString(1, user.getId());
+	        psmt.setString(2, user.getPassword());
+	        psmt.setString(3, user.getName());
+	        psmt.setString(4, user.getGender());
+	        psmt.setString(5, user.getBirth());
+	        psmt.setString(6, user.getMail());
+	        psmt.setString(7, user.getPhone());
+	        psmt.setString(8, user.getAddress());
+	        result = psmt.executeUpdate();
+	    } catch (SQLException e) {
+	        System.err.println("회원 등록 중 오류 발생!");
+	        e.printStackTrace();
+	    }
+	    return result;
 	}
 	
 	
@@ -41,27 +43,30 @@ public class UserRepository extends JDBConnection {
 	 * @return
 	 */
 	public User login(String id, String pw) {
-		String sql = "SELECT * FROM user WHERE id = ? AND password = ?";
-        User user = null;
-        try {
-            psmt = con.prepareStatement(sql);
-            psmt.setString(1, id);
-            psmt.setString(2, pw);
-            rs = psmt.executeQuery();
-            if (rs.next()) {
-                user = new User();
-                user.setId(rs.getString("id"));
-                user.setPassword(rs.getString("pw"));
-                user.setName(rs.getString("name"));
-                user.setPhone(rs.getString("phone"));
-                user.setBirth(rs.getString("birth"));
-                user.setGender(rs.getString("gender"));
-            }
-        } catch (SQLException e) {
-            System.err.println("로그인 중 오류 발생");
-            e.printStackTrace();
-        }
-        return user;
+		User user = null;
+	    String sql = "SELECT * FROM user WHERE id = ? AND password = ?";
+	    try {
+	        psmt = con.prepareStatement(sql);
+	        psmt.setString(1, id);
+	        psmt.setString(2, pw);
+	        rs = psmt.executeQuery();
+	        if (rs.next()) {
+	            user = new User();
+	            user.setId(rs.getString("id"));
+	            user.setPassword(rs.getString("password"));
+	            user.setName(rs.getString("name"));
+	            user.setGender(rs.getString("gender"));
+	            user.setBirth(rs.getString("birth"));
+	            user.setMail(rs.getString("mail"));
+	            user.setPhone(rs.getString("phone"));
+	            user.setAddress(rs.getString("address"));
+	            user.setRegistDay(rs.getString("regist_day"));
+	        }
+	    } catch (SQLException e) {
+	        System.err.println("로그인 중 오류 발생!");
+	        e.printStackTrace();
+	    }
+	    return user;
 	}
 	
 	
@@ -74,26 +79,29 @@ public class UserRepository extends JDBConnection {
 	 * @return
 	 */
 	public User getUserById(String id) {
-		String sql = "SELECT * FROM user WHERE id = ?";
-        User user = null;
-        try {
-            psmt = con.prepareStatement(sql);
-            psmt.setString(1, id);
-            rs = psmt.executeQuery();
-            if (rs.next()) {
-                user = new User();
-                user.setId(rs.getString("id"));
-                user.setPassword(rs.getString("password"));
-                user.setName(rs.getString("name"));
-                user.setPhone(rs.getString("phone"));
-                user.setBirth(rs.getString("birth"));
-                user.setGender(rs.getString("gender"));
-            }
-        } catch (SQLException e) {
-            System.err.println("사용자 조회 중 오류 발생");
-            e.printStackTrace();
-        }
-        return user;
+		User user = null;
+	    String sql = "SELECT * FROM user WHERE id = ?";
+	    try {
+	        psmt = con.prepareStatement(sql);
+	        psmt.setString(1, id);
+	        rs = psmt.executeQuery();
+	        if (rs.next()) {
+	            user = new User();
+	            user.setId(rs.getString("id"));
+	            user.setPassword(rs.getString("password"));
+	            user.setName(rs.getString("name"));
+	            user.setGender(rs.getString("gender"));
+	            user.setBirth(rs.getString("birth"));
+	            user.setMail(rs.getString("mail"));
+	            user.setPhone(rs.getString("phone"));
+	            user.setAddress(rs.getString("address"));
+	            user.setRegistDay(rs.getString("regist_day"));
+	        }
+	    } catch (SQLException e) {
+	        System.err.println("회원 조회 중 오류 발생!");
+	        e.printStackTrace();
+	    }
+	    return user;
 	}
 	
 	
@@ -104,21 +112,23 @@ public class UserRepository extends JDBConnection {
 	 */
 	public int update(User user) {
 		int result = 0;
-        String sql = "UPDATE user SET password=?, name=?, phone=?, birth=?, gender=? WHERE id=?";
-        try {
-            psmt = con.prepareStatement(sql);
-            psmt.setString(1, user.getPassword());
-            psmt.setString(2, user.getName());
-            psmt.setString(3, user.getPhone());
-            psmt.setString(4, user.getBirth());
-            psmt.setString(5, user.getGender());
-            psmt.setString(6, user.getId());
-            result = psmt.executeUpdate();
-        } catch (SQLException e) {
-            System.err.println("회원 정보 수정 중 오류 발생");
-            e.printStackTrace();
-        }
-        return result;
+	    String sql = "UPDATE user SET password=?, name=?, gender=?, birth=?, mail=?, phone=?, address=? WHERE id=?";
+	    try {
+	        psmt = con.prepareStatement(sql);
+	        psmt.setString(1, user.getPassword());
+	        psmt.setString(2, user.getName());
+	        psmt.setString(3, user.getGender());
+	        psmt.setString(4, user.getBirth());
+	        psmt.setString(5, user.getMail());
+	        psmt.setString(6, user.getPhone());
+	        psmt.setString(7, user.getAddress());
+	        psmt.setString(8, user.getId());
+	        result = psmt.executeUpdate();
+	    } catch (SQLException e) {
+	        System.err.println("회원 정보 수정 중 오류 발생!");
+	        e.printStackTrace();
+	    }
+	    return result;
 	}
 
 
@@ -129,16 +139,16 @@ public class UserRepository extends JDBConnection {
 	 */
 	public int delete(String id) {
 		int result = 0;
-        String sql = "DELETE FROM user WHERE id = ?";
-        try {
-            psmt = con.prepareStatement(sql);
-            psmt.setString(1, id);
-            result = psmt.executeUpdate();
-        } catch (SQLException e) {
-            System.err.println("회원 삭제 중 오류 발생");
-            e.printStackTrace();
-        }
-        return result;
+	    String sql = "DELETE FROM user WHERE id = ?";
+	    try {
+	        psmt = con.prepareStatement(sql);
+	        psmt.setString(1, id);
+	        result = psmt.executeUpdate();
+	    } catch (SQLException e) {
+	        System.err.println("회원 삭제 중 오류 발생!");
+	        e.printStackTrace();
+	    }
+	    return result;
 	}
 	
 	/**
