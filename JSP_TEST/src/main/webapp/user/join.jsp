@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+ <%@ include file="/layout/meta.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,7 +28,7 @@
 			<div class="input-group mb-3 row">
 				<label class="input-group-text col-md-4" id="">비밀번호</label>
 				<input type="password" class="form-control col-md-8" 
-					   name="pw" placeholder="비밀번호" required>
+					   name="password" placeholder="비밀번호" required>
 			</div>
 			
 			<div class="input-group mb-3 row">
@@ -132,16 +133,11 @@
 			
 			
 			<div class="d-grid gap-2 mt-5 mb-5 d-md-flex justify-content-md-between">
-				<a href="javascript: history.back()" class="btn btn-lg btn-secondary">취소</a>
+				<a href="<%= root %>/shop/join_pro.jsp" class="btn btn-lg btn-secondary">취소</a>
 				<input type="submit" class="btn btn-lg btn-primary" value="가입" />
 			</div>	
-			
-			
 		</form>
-	
 	</div>
-	
-	
 	<jsp:include page="/layout/footer.jsp" />
 	<jsp:include page="/layout/script.jsp" />
 </body>
