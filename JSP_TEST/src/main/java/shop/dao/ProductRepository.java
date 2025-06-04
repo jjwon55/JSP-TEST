@@ -14,7 +14,7 @@ public class ProductRepository extends JDBConnection {
 	 */
 	public List<Product> list() {
 		List<Product> list = new ArrayList<>();
-        String sql = "SELECT * FROM product ORDER BY reg_date DESC";
+        String sql = "SELECT * FROM product ORDER BY product_id DESC";
         try {
             stmt = con.createStatement();
             rs = stmt.executeQuery(sql);
@@ -35,7 +35,7 @@ public class ProductRepository extends JDBConnection {
 	 */
 	public List<Product> list(String keyword) {
 		List<Product> list = new ArrayList<>();
-        String sql = "SELECT * FROM product WHERE name LIKE ? ORDER BY reg_date DESC";
+        String sql = "SELECT * FROM product WHERE name LIKE ? ORDER BY product_id DESC";
         try {
             psmt = con.prepareStatement(sql);
             psmt.setString(1, "%" + keyword + "%");
@@ -78,7 +78,7 @@ public class ProductRepository extends JDBConnection {
 	 */
 	public int insert(Product product) {
 		int result = 0;
-        String sql = "INSERT INTO product (product_id, name, price, stock) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO product (product_id, name, unit_price, units_in_stock) VALUES (?, ?, ?, ?)";
         try {
             psmt = con.prepareStatement(sql);
             psmt.setString(1, product.getProductId());
@@ -100,7 +100,7 @@ public class ProductRepository extends JDBConnection {
 	 */
 	public int update(Product product) {
 		int result = 0;
-        String sql = "UPDATE product SET name = ?, price = ?, stock = ? WHERE product_id = ?";
+        String sql = "UPDATE product SET name = ?, unit_price = ?, units_in_stock = ? WHERE product_id = ?";
         try {
             psmt = con.prepareStatement(sql);
             psmt.setString(1, product.getName());
