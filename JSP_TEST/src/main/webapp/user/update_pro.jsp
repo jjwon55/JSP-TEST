@@ -7,7 +7,7 @@
 	// 회원 정보 수정 처리
 
     int result = userDAO.update(user);
-    if (result >0 ){
+    if (result > 0 ){
         response.sendRedirect("complete.jsp?msg=2");
     } else {
         response.sendRedirect("update.jsp");
