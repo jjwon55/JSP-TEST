@@ -6,25 +6,35 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Shop</title>
-	<jsp:include page="/layout/meta.jsp" /> <jsp:include page="/layout/link.jsp" />
+	<jsp:include page="/layout/meta.jsp" /> 
+	<jsp:include page="/layout/link.jsp" />
 </head>
 <body>   
 	<% 
 		String root = request.getContextPath();
 		String error = request.getParameter("error");
-		
+
 		// 이미 로그인한 경우
 		String loginId = (String) session.getAttribute("loginId");
 		loginId = loginId != null ? loginId : "";
-		
-		if( loginId != null && !loginId.equals("") ) {
+
+		if (loginId != null && !loginId.equals("")) {
 			response.sendRedirect(root + "/user/logged.jsp");
 		}
-		
+
 		// 아이디 저장 쿠키 가져오기
-		
-		
+		String rememberId = null;
+		Cookie[] cookies = request.getCookies();
+		if (cookies != null) {
+		    for (Cookie cookie : cookies) {
+		        if (cookie.getName().equals("rememberId")) {
+		            rememberId = URLDecoder.decode(cookie.getValue(), "UTF-8");
+		            break;
+		        }
+		    }
+		}
 	%>
+
 	<jsp:include page="/layout/header.jsp" />
 	<div class="px-4 py-5 mt-5 text-center">
 		<h1 class="display-5 fw-bold text-body-emphasis">로그인</h1>
@@ -76,7 +86,7 @@
 	    </p>
 	    
 	    <div class="d-grid gap-2">
-		    <button class="btn btn-primary w-100 py-2" type="submit">로그인</button>
+		    <a href="<%= root %>/shop/products.jsp" class="btn btn-primary w-100 py-2">로그인</a>
 		    <a href="<%= root %>/user/join.jsp" class="btn btn-success w-100 py-2">회원가입</a>
 	    </div>
 	  </form>

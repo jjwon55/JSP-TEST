@@ -2,15 +2,10 @@ package filter;
 
 import java.io.IOException;
 
-<<<<<<< HEAD
-import jakarta.servlet.Filter;
-import jakarta.servlet.FilterChain;
-=======
-
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.FilterConfig;
->>>>>>> branch 'ys_shin' of https://github.com/jjwon55/JSP-TEST.git
+//github.com/jjwon55/JSP-TEST.git
 import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
