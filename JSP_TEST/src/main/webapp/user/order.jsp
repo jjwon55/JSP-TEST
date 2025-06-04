@@ -23,8 +23,19 @@
 		
 		// 회원인 경우
 		
+    boolean login = (session.getAttribute("loginUser") != null);
+
+    List<Product> orderList = (List<Product>) session.getAttribute("orderList");
+    if(orderList == null) orderList = new ArrayList<>();
+
+    Integer orderCount = (Integer) session.getAttribute("orderCount");
+    if(orderCount == null) orderCount = 0;
+
+    String orderPhone = (String) session.getAttribute("orderPhone");
+%>
+
 		
-	%>
+	
 	
 	<jsp:include page="/layout/header.jsp" />
 	
