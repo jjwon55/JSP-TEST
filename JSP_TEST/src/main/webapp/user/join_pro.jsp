@@ -28,17 +28,16 @@
     user.setPhone(phone);
     user.setAddress(address);
     
-    Random random = new Random();
-    int result = random.nextInt(2);
-
+    UserRepository repo = new UserRepository();
+    int result = repo.insert(user);
+	
     String root = request.getContextPath();
-    if (result > 0) {
-        //로그인 페이지로 이동
-        response.sendRedirect(root + "/login.jsp");
+    if ( result > 0) {
+        response.sendRedirect(root + "/user/complete.jsp");
     } else {
-        //회원가입
-        response.sendRedirect(root + "/join.jsp?error=invalid");
+        response.sendRedirect(root + "/user/join.jsp?error=invalid");
     }
+
 	
 %>
     

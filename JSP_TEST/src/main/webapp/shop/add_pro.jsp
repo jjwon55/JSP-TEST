@@ -48,10 +48,10 @@
 
 	// DAO 등록
 	ProductRepository repo = new ProductRepository();
-	boolean result = repo.insert(product);  // insert() 구현 필요
-
+	int result = repo.insert(product);
+	
 	// 결과에 따라 이동
-	if (result) {
+	if (result > 0) {
 		response.sendRedirect("product.jsp");  // 상품 목록 페이지
 	} else {
 		response.sendRedirect("add.jsp?error=fail");  // 실패 시 등록 페이지로

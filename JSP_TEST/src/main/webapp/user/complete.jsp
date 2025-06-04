@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ include file="/layout/meta.jsp" %>
 <%
     String type = request.getParameter("type");
     String message = "";
@@ -9,7 +10,7 @@
     } else if ("update".equals(type)) {
         message = "회원 정보가 수정되었습니다.";
     } else {
-        message = "처리가 완료되었습니다.";
+        message = "회원가입이 완료되었습니다.";
     }
 %>
 <!DOCTYPE html>
@@ -32,7 +33,7 @@
 	<div class="container mb-5">
 		<h1 class="text-center"><%= message %></h1>
 		<div class="btn-box d-flex justify-content-center p-5">
-			<a href="/" class="btn btn-lg btn-primary">메인 화면</a>
+			<a href="<%= root %>/index.jsp" class="btn btn-lg btn-primary">메인 화면</a>
 		</div>
 	</div>
 
