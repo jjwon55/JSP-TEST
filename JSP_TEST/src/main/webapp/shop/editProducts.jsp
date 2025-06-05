@@ -3,6 +3,10 @@
 <%@page import="shop.dto.Product"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%
+    ProductRepository repo = new ProductRepository();
+    List<Product> products = repo.list();
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -28,122 +32,34 @@
 			</div>
 		</div>
 	</div>
-	
 	<div class="container mb-5">
-		<div class="row gy-4">
-			
-				<div class="col-md-6 col-xl-4 col-xxl-3">
-					<div class="card p-3">
-						<!-- 이미지 영역 -->
-						<div class="img-content">
-							<img src="img?id=P100001" class="w-100 p-2">
-						</div>
-						<!-- 컨텐츠 영역 -->
-						<div class="content">
-							<h3 class="text-center">자바 프로그래밍</h3>
-							<p>안녕하세요 자바프로그래밍 강의입니다.</p>
-							<p class="text-end price">₩ 50000</p>
-							<p class="d-flex justify-content-end">
-								<!-- [NEW] 수정 버튼으로 변경 -->
+        <div class="row gy-4">
+            <%
+                for (Product p : products) {
+            %>
+                <div class="col-md-6 col-xl-4 col-xxl-3">
+                    <div class="card p-3">
+                        <div class="img-content">
+                            <img src="img?id=<%= p.getProductId() %>" class="w-100 p-2">
+                        </div>
+                        <div class="content">
+                            <h3 class="text-center"><%= p.getName() %></h3>
+                            <p class="text-end price">₩ <%= p.getUnitPrice() %></p>
+                            <p class="d-flex justify-content-between">
+                               <!-- [NEW] 수정 버튼으로 변경 -->
 								<a href="./update.jsp?id=P100001" class="btn btn-primary mx-2">수정</a>
 								<!-- [NEW] 삭제 버튼 추가 -->
-
 								<a href="javascript:;" class="btn btn-danger mx-2" onclick="deleteProduct('P100001')">삭제</a>
-							</p>
-						</div>						
-					</div>
-				</div>
-			
-				<div class="col-md-6 col-xl-4 col-xxl-3">
-					<div class="card p-3">
-						<!-- 이미지 영역 -->
-						<div class="img-content">
-							<img src="img?id=P100002" class="w-100 p-2">
-						</div>
-						<!-- 컨텐츠 영역 -->
-						<div class="content">
-							<h3 class="text-center">오라클 데이터베이스</h3>
-							<p>오라클 데이터베이스 입니다.</p>
-							<p class="text-end price">₩ 20000</p>
-							<p class="d-flex justify-content-end">
-								<!-- [NEW] 수정 버튼으로 변경 -->
-								<a href="./update.jsp?id=P100002" class="btn btn-primary mx-2">수정</a>
-								<!-- [NEW] 삭제 버튼 추가 -->
-
-								<a href="javascript:;" class="btn btn-danger mx-2" onclick="deleteProduct('P100002')">삭제</a>
-							</p>
-						</div>						
-					</div>
-				</div>
-			
-				<div class="col-md-6 col-xl-4 col-xxl-3">
-					<div class="card p-3">
-						<!-- 이미지 영역 -->
-						<div class="img-content">
-							<img src="img?id=P100003" class="w-100 p-2">
-						</div>
-						<!-- 컨텐츠 영역 -->
-						<div class="content">
-							<h3 class="text-center">HTML CSS JAVASCRIPT</h3>
-							<p>웹 기초 강의입니다.</p>
-							<p class="text-end price">₩ 15000</p>
-							<p class="d-flex justify-content-end">
-								<!-- [NEW] 수정 버튼으로 변경 -->
-								<a href="./update.jsp?id=P100003" class="btn btn-primary mx-2">수정</a>
-								<!-- [NEW] 삭제 버튼 추가 -->
-
-								<a href="javascript:;" class="btn btn-danger mx-2" onclick="deleteProduct('P100003')">삭제</a>
-							</p>
-						</div>						
-					</div>
-				</div>
-			
-				<div class="col-md-6 col-xl-4 col-xxl-3">
-					<div class="card p-3">
-						<!-- 이미지 영역 -->
-						<div class="img-content">
-							<img src="img?id=P100004" class="w-100 p-2">
-						</div>
-						<!-- 컨텐츠 영역 -->
-						<div class="content">
-							<h3 class="text-center">JSP</h3>
-							<p>JSP 강의입니다.</p>
-							<p class="text-end price">₩ 80000</p>
-							<p class="d-flex justify-content-end">
-								<!-- [NEW] 수정 버튼으로 변경 -->
-								<a href="./update.jsp?id=P100004" class="btn btn-primary mx-2">수정</a>
-								<!-- [NEW] 삭제 버튼 추가 -->
-
-								<a href="javascript:;" class="btn btn-danger mx-2" onclick="deleteProduct('P100004')">삭제</a>
-							</p>
-						</div>						
-					</div>
-				</div>
-			
-				<div class="col-md-6 col-xl-4 col-xxl-3">
-					<div class="card p-3">
-						<!-- 이미지 영역 -->
-						<div class="img-content">
-							<img src="img?id=P123123" class="w-100 p-2">
-						</div>
-						<!-- 컨텐츠 영역 -->
-						<div class="content">
-							<h3 class="text-center">고지민</h3>
-							<p>고지민</p>
-							<p class="text-end price">₩ 2000000</p>
-							<p class="d-flex justify-content-end">
-								<!-- [NEW] 수정 버튼으로 변경 -->
-								<a href="./update.jsp?id=P123123" class="btn btn-primary mx-2">수정</a>
-								<!-- [NEW] 삭제 버튼 추가 -->
-
-								<a href="javascript:;" class="btn btn-danger mx-2" onclick="deleteProduct('P123123')">삭제</a>
-							</p>
-						</div>						
-					</div>
-				</div>
-			
-		</div>
-	</div>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            <%
+                }
+            %>
+        </div>
+    </div>
+	
 <footer class="container p-5">
 	<p class="text-center">Copyright ⓒ ALOHA CLASS. All Rights Reserved</p>
 </footer>
@@ -152,11 +68,6 @@
 <!-- <script src="../static/js/validation.js"></script> -->			<!-- 상대경로 -->
 	<!-- 절대경로 -->
 <script src="/static/js/validation.js"></script>
-
-
-
-
-
 	
 	
 	<script>

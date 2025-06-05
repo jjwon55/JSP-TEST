@@ -6,9 +6,9 @@
 
     if (productId != null && !productId.trim().isEmpty()) {
         ProductRepository repo = new ProductRepository();
-        boolean deleted = repo.delete(productId);  // delete(String id) 메서드가 있어야 함
+        int deleted = repo.delete(productId);  // delete(String id) 메서드가 있어야 함
 
-        if (deleted) {
+        if (deleted != 0) {
             // 삭제 성공 → 상품 목록(또는 편집 페이지)로 이동
             response.sendRedirect("products.jsp");
         } else {
