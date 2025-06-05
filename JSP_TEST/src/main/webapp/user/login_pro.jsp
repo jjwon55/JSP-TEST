@@ -23,7 +23,8 @@
 	// 로그인 성공
 	// - 세션에 아이디 등록
 	session.setAttribute("loginUser", loginUser);
-
+	session.setAttribute("loginId", loginUser.getId());
+	
 	// 아이디 저장
 	String rememberId = request.getParameter("rememberId");
 	if ("on".equals(rememberId)) {
@@ -43,12 +44,11 @@
 		Cookie autoCookie = new Cookie("autoLoginToken", token);
 		autoCookie.setMaxAge(60 * 60 * 24 * 7); // 7일 유지
 		response.addCookie(autoCookie);
-		userDAO.saveAutoLoginToken(loginUser.getId(), token);
 	}
 	// 쿠키 전달
 	
 	// 로그인 성공 페이지로 이동
-	response.sendRedirect("complete.jsp?msg=0");		
+	response.sendRedirect("complete.jsp?type=login");		
 
 %>
 
