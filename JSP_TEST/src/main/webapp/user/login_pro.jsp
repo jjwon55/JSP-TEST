@@ -43,6 +43,7 @@
 		Cookie autoCookie = new Cookie("autoLoginToken", token);
 		autoCookie.setMaxAge(60 * 60 * 24 * 7); // 7일 유지
 		response.addCookie(autoCookie);
+		userDAO.saveAutoLoginToken(loginUser.getId(), token);
 	}
 	// 쿠키 전달
 	

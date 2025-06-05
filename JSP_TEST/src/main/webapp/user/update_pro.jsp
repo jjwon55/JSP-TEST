@@ -1,25 +1,20 @@
 <%@page import="shop.dto.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <jsp:useBean id="userDAO" class="shop.dao.UserRepository" />
 <%
+// 회원 정보 수정 처리
 
-	// 회원 정보 수정 처리
-
-    int result = userDAO.update(user);
-    if (result >0 ){
-        response.sendRedirect("complete.jsp?msg=2");
-    } else {
-        response.sendRedirect("update.jsp");
-    }
-
+int result = userDAO.update(user);
+if (result > 0) {
+	response.sendRedirect("complete.jsp?msg=2");
+} else {
+	response.sendRedirect("update.jsp");
+}
 %>
 <head>
-	<meta charset="UTF-8">
-	
-	
-
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Shop🛒 - ALOHA CLASS🌴</title>
 <!-- 파비콘 -->
@@ -41,129 +36,59 @@
 <!-- 사이트 맵 -->
 <link rel="sitemap" href="/static/sitemap.xml">
 
-
-
-
-	
-    
 <!-- bootstrap lib -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
+	crossorigin="anonymous">
 
 <!-- Noto Sans font -->
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans:400,700&amp;display=swap">
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css?family=Noto+Sans:400,700&amp;display=swap">
 
 <!-- material design icon -->
-<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
 <link href="/static/css/style.css" rel="stylesheet">
 <style>
-  .imageye-selected {
-    outline: 2px solid black !important;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5) !important;
-  }
+.imageye-selected {
+	outline: 2px solid black !important;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.5) !important;
+}
 </style>
 </head>
 
-<body>   
-	
-	
-	
-
-
-    
-
-<nav class="navbar bg-dark navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="/">Home</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="/shop/products.jsp">Product</a>
-        </li>
-      </ul>
-       <ul class="navbar-nav d-flex align-items-center px-3">
-       	
-        <!-- 로그인 시 -->
-<!--         <li class="nav-item"> -->
-
-<!--         </li> -->
-        <li class="nav-item">
-        <div class="dropdown">
-	      <a href="#" class="d-flex align-items-center link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-	        <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
-	        <strong>user</strong>
-	      </a>
-	      <ul class="dropdown-menu text-small shadow">
-	        <li><a class="dropdown-item" href="/user/index.jsp">마이 페이지</a></li>
-	        <li><a class="dropdown-item" href="/user/update.jsp">회원정보 수정</a></li>
-	        <li><a class="dropdown-item" href="/user/order.jsp">주문내역</a></li>
-	        <li><hr class="dropdown-divider"></li>
-	        <li><a class="dropdown-item" href="/user/logout.jsp">로그아웃</a></li>
-	      </ul>
-	    </div>
-        </li>
-        
-        
-<!--         <li class="nav-item"> -->
-
-<!--         </li> -->
-        
-        <li class="nav-item">
-	        <a class="nav-link position-relative" aria-current="page" href="/shop/cart.jsp">
-	        	<i class="material-symbols-outlined">shopping_bag</i>
-	        	<span class="cart-count">0</span>
-	        </a>
-        </li>
-      </ul>
-      <form class="d-flex" role="search" action="/shop/products.jsp" method="get">
-        <input class="form-control me-2" type="search" name="keyword" placeholder="Search" aria-label="Search" value="">
-        <button class="btn btn-outline-success" type="submit">Search</button>
-      </form>
-    </div>
-  </div>
-</nav>
-
-
-
-
+<body>
 
 	<div class="px-4 py-5 my-5 text-center">
 		<h1 class="display-5 fw-bold text-body-emphasis">회원 정보</h1>
-		
+
 	</div>
 	<!-- 회원 가입/수정/탈퇴 완료 -->
 	<div class="container mb-5">
-		
+
 		<h1 class="text-center">회원 정보가 수정되었습니다.</h1>
 		<div class="btn-box d-flex justify-content-center p-5">
 			<a href="/" class="btn btn-lg btn-primary">메인 화면</a>
 		</div>
 	</div>
-	
-	
-<footer class="container p-5">
-	<p class="text-center">Copyright ⓒ ALOHA CLASS. All Rights Reserved</p>
-</footer>
-	
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
-<!-- <script src="../static/js/validation.js"></script> -->			<!-- 상대경로 -->
+
+
+	<footer class="container p-5">
+		<p class="text-center">Copyright ⓒ ALOHA CLASS. All Rights
+			Reserved</p>
+	</footer>
+
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+		crossorigin="anonymous"></script>
+	<!-- <script src="../static/js/validation.js"></script> -->
+	<!-- 상대경로 -->
 	<!-- 절대경로 -->
-<script src="/static/js/validation.js"></script>
-
-
-
-
-
-
-
-
-
-
-
-
-
+	<script src="/static/js/validation.js"></script>
 
 </body>
