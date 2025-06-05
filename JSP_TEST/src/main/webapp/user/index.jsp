@@ -2,6 +2,11 @@
 <%@page import="shop.dto.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ include file="/layout/meta.jsp" %>
+<%
+    User loginUser = (User) session.getAttribute("loginUser");
+    boolean login = (loginUser != null);
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,8 +24,16 @@
 			    <ul class="nav nav-pills flex-column mb-auto">
 			      <!-- 로그인 시 -->
 			      <% if( login ) { %>
-			      	
-			      	
+			      	<li class="nav-item">
+			        	<a href="/user/update.jsp" class="nav-link active" aria-current="page">
+			          		마이 페이지
+			        	</a>
+			      	</li>
+			      	<li class="nav-item">
+			        	<a href="<%= root %>/user/update.jsp" class="nav-link link-body-emphasis">
+			          		회원정보 수정
+			        	</a>
+			      </li>
 			      <% } %>
 			      <li>
 			        <a href="<%= root %>/user/order.jsp" class="nav-link link-body-emphasis">

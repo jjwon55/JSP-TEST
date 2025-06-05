@@ -5,10 +5,14 @@
     String type = request.getParameter("type");
     String message = "";
 
+    String loginId = (String) session.getAttribute("loginId");
+
     if ("delete".equals(type)) {
         message = "회원 정보가 삭제되었습니다.";
     } else if ("update".equals(type)) {
         message = "회원 정보가 수정되었습니다.";
+    } else if ("login".equals(type) && loginId != null) {
+        message = loginId + "님, 환영합니다!";
     } else {
         message = "회원가입이 완료되었습니다.";
     }

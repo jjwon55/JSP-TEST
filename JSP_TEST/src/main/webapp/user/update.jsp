@@ -11,6 +11,7 @@
 <title>Shop</title>
 </head>
 <body>
+
 	<%
 	String loginId = (String) session.getAttribute("loginId");
 
