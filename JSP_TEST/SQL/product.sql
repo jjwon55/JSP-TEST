@@ -33,3 +33,4 @@ VALUES('P100003', 'HTML CSS JAVASCRIPT', 15000, '웹 기초 강의입니다.', '
 INSERT INTO product
 (product_id, name, unit_price, description, manufacturer, category, units_in_stock, `condition`, file)
 VALUES('P100004', 'JSP', 80000, 'JSP 강의입니다.', '알로하클래스', '강의', 100, 'NEW', '/static/img/JSP.jpg');
+

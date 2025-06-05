@@ -15,20 +15,20 @@
     }
 
     ProductRepository repo = new ProductRepository();
-    Product product = repo.findById(id);
+    Product product = repo.getProductById(id);
 
     if (product == null) {
         response.sendRedirect("products.jsp?error=notfound");
         return;
     }
 
-    List<Product> cart = (List<Product>) session.getAttribute("cart");
-    if (cart == null) {
-        cart = new ArrayList<>();
+    List<Product> cartList = (List<Product>) session.getAttribute("cartList");
+    if (cartList == null) {
+        cartList = new ArrayList<>();
     }
 
     boolean found = false;
-    for (Product p : cart) {
+    for (Product p : cartList) {
         if (p.getProductId().equals(id)) {
             p.setQuantity(p.getQuantity() + 1);
             found = true;
@@ -38,9 +38,9 @@
 
     if (!found) {
         product.setQuantity(1);
-        cart.add(product);
+        cartList.add(product);
     }
 
-    session.setAttribute("cart", cart);
+    session.setAttribute("cart", cartList);
     response.sendRedirect("cart.jsp");
 %>
