@@ -13,10 +13,10 @@
 <jsp:include page="/layout/header.jsp" />
 
 <%
-	List<Product> cart = (List<Product>) session.getAttribute("cart");
+	List<Product> cartList = (List<Product>) session.getAttribute("cartList");
 	int total = 0;
 	int count = 0;
-	String cartId = "027CB9481FF743CC8FB11365BB289DFB"; // 예시 고정 UUID
+	String cartId = "027CB9481FF743CC8FB11365BB289DFB"; 
 %>
 
 <div class="px-4 py-5 my-5 text-center">
@@ -40,8 +40,8 @@
 		</thead>
 		<tbody>
 			<%
-				if (cart != null && !cart.isEmpty()) {
-					for (Product p : cart) {
+				if (cartList != null && !cartList.isEmpty()) {
+					for (Product p : cartList) {
 						int subtotal = p.getUnitPrice() * p.getQuantity();
 						total += subtotal;
 						count += p.getQuantity();

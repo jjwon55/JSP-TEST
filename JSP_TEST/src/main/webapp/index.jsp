@@ -1,9 +1,14 @@
+<%@page import="shop.dto.User"%>
 <%@page import="shop.dao.ProductRepository"%>
 <%@page import="java.util.List"%>
 <%@page import="shop.dto.Product"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/layout/meta.jsp" %>
+<%
+    User loginUser = (User) session.getAttribute("loginUser");
+    boolean login = (loginUser != null);
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,7 +25,11 @@
 			<p class="lead mb-4">Shop 쇼핑몰 입니다.</p>
 			<div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
 				<a href="<%= root %>/shop/products.jsp" class="btn btn-primary btn-lg px-4 gap-3">상품목록</a>
+				<% if(login) { %>
+					<a href="<%= root %>/user/logout.jsp" class="btn btn-outline-danger btn-lg px-4">로그아웃</a>
+				<% } else { %>
 				<a href="<%= root %>/user/login.jsp" type="submit" class="btn btn-outline-secondary btn-lg px-4">로그인</a>
+				<% } %>
 			</div>
 		</div>
 	</div>

@@ -41,6 +41,7 @@
         cartList.add(product);
     }
 
-    session.setAttribute("cart", cartList);
-    response.sendRedirect("cart.jsp");
+    session.setAttribute("cartList", cartList);
+
+    response.sendRedirect("products.jsp");
 %>
