@@ -6,12 +6,13 @@
 <%@page import="shop.dto.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ include file="/layout/meta.jsp" %>
+<%@ include file="/layout/link.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
 	<meta charset="UTF-8">
 	<title>Shop</title>
-	<jsp:include page="/layout/meta.jsp" /> <jsp:include page="/layout/link.jsp" />
 </head>
 <body>   
 	<% 
@@ -22,7 +23,6 @@
 		// 주문 내역 목록을 세션에서 가져오기
 		
 		// 회원인 경우
-		
     boolean login = (session.getAttribute("loginUser") != null);
 
     List<Product> orderList = (List<Product>) session.getAttribute("orderList");

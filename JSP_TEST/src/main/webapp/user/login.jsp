@@ -70,14 +70,14 @@
 		      <label class="form-check-label" for="flexCheckDefault1">아이디 저장</label>
 	    	</div>
 	    	<div class="item">
-		      <input class="form-check-input" type="checkbox" name="remember-me" id="flexCheckDefault2">
+		      <input class="form-check-input" type="checkbox" name="autoLogin" id="flexCheckDefault2">
 		      <label class="form-check-label" for="flexCheckDefault2">자동 로그인</label>
 	    	</div>
 	      
 	    </div>
 	    <p class="text-center text-danger">
 	    	<%
-	    		if( error != null && error.equals("0") ) {
+	    		if( error != null && error.equals("invalid") ) {
 	    	%>
 	    		아이디 또는 비밀번호를 잘못 입력했습니다.
 	    	<%
@@ -86,7 +86,7 @@
 	    </p>
 	    
 	    <div class="d-grid gap-2">
-		    <a href="<%= root %>/shop/products.jsp" class="btn btn-primary w-100 py-2">로그인</a>
+		    <button type="submit" class="btn btn-primary w-100 py-2">로그인</button>
 		    <a href="<%= root %>/user/join.jsp" class="btn btn-success w-100 py-2">회원가입</a>
 	    </div>
 	  </form>

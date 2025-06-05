@@ -4,7 +4,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
-	
+	String root = request.getContextPath();
 	// 비회원 주문 내역 세션에 등록 처리
 	// 1. 파라미터 받기
 	String phone = request.getParameter("phone");
@@ -14,7 +14,7 @@
 	OrderRepository orderRepo = new OrderRepository();
 
 	// 3. 주문 목록 조회 (비회원용)
-	List<Product> orderList = orderRepo.findByPhoneAndPw(phone, orderPw);
+	List<Product> orderList = orderRepo.list(phone, orderPw);
 
 	if (orderList != null && !orderList.isEmpty()) {
 		// 4. 세션에 주문정보 저장
