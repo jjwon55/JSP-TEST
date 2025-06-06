@@ -44,6 +44,7 @@
                         </div>
                         <div class="content">
                             <h3 class="text-center"><%= p.getName() %></h3>
+                            <p><%= p.getDescription() %></p>
                             <p class="text-end price">₩ <%= p.getUnitPrice() %></p>
                             <p class="d-flex justify-content-between">
                                <!-- [NEW] 수정 버튼으로 변경 -->
@@ -60,13 +61,6 @@
         </div>
     </div>
 	
-<footer class="container p-5">
-	<p class="text-center">Copyright ⓒ ALOHA CLASS. All Rights Reserved</p>
-</footer>
-	
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
-<!-- <script src="../static/js/validation.js"></script> -->			<!-- 상대경로 -->
-	<!-- 절대경로 -->
 <script src="/static/js/validation.js"></script>
 <script>
 	function deleteProduct(productId) {
