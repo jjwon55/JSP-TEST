@@ -49,7 +49,7 @@ function checkJoin() {
 
 
 	let msg = '';
-	let idCheck = /^[a-zA-Zㄱ-ㅎㅏ-ㅣ가-힣]+$/
+	let idCheck = /^[a-zA-Z가-힣][a-zA-Z가-힣0-9]{1,19}$/;
 	msg = '아이디는 첫글자는 영문자 또는 한글만 가능합니다. (영문자, 한글, 숫자 조합 가능)';
 	if (!check(idCheck, id, msg)) return false;
 
