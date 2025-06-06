@@ -177,4 +177,34 @@ public class ProductRepository extends JDBConnection {
         }
         return result;
     }
+    
+    
+//    public void delete(String productId) {
+//        String sql = "DELETE FROM product WHERE product_id = ?";
+//        
+//        try {
+//            psmt = con.prepareStatement(sql);
+//            psmt.setString(1, productId);
+//            int result = psmt.executeUpdate();
+//            
+//            if (result > 0) {
+//                System.out.println(">>> 상품 삭제 성공: " + productId);
+//            } else {
+//                System.out.println(">>> 삭제할 상품이 없습니다: " + productId);
+//            }
+//
+//        } catch (SQLException e) {
+//            System.err.println(">>> 상품 삭제 중 오류 발생:");
+//            e.printStackTrace();
+//        } finally {
+//            try {
+//                if (psmt != null) psmt.close();
+//            } catch (SQLException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//    }
+    
+    
+    
 }
