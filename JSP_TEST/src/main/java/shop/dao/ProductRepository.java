@@ -1,5 +1,6 @@
 package shop.dao;
 
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -147,13 +148,32 @@ public class ProductRepository extends JDBConnection {
     /** 상품 삭제 */
     public int delete(String productId) {
         int result = 0;
-        String sql = "DELETE FROM product WHERE product_id = ?";
+
+        String sqlChild  = "DELETE FROM product_io WHERE product_id = ?";
+        String sqlParent = "DELETE FROM product    WHERE product_id = ?";
+
         try {
-            psmt = con.prepareStatement(sql);
-            psmt.setString(1, productId);
-            result = psmt.executeUpdate();
+            /* 트랜잭션 시작 */
+            con.setAutoCommit(false);
+
+            /* 1) 자식 테이블(product_io) 먼저 삭제 */
+            try (PreparedStatement psChild = con.prepareStatement(sqlChild)) {
+                psChild.setString(1, productId);
+                psChild.executeUpdate();
+            }
+
+            /* 2) 부모 테이블(product) 삭제 */
+            try (PreparedStatement psParent = con.prepareStatement(sqlParent)) {
+                psParent.setString(1, productId);
+                result = psParent.executeUpdate();   // 삭제된 상품 행 수(0 또는 1)
+            }
+
+            con.commit();                // 모두 성공 → 커밋
         } catch (SQLException e) {
+            try { con.rollback(); } catch (SQLException ignore) {}
             e.printStackTrace();
+        } finally {
+            try { con.setAutoCommit(true); } catch (SQLException ignore) {}
         }
         return result;
     }
