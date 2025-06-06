@@ -1,8 +1,15 @@
 package shop.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+
 /**
  * 주문 데이터
  */
+@Data
+@AllArgsConstructor
+@Builder
 public class Order {
 
 	private int orderNo;

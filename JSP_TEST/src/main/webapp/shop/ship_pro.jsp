@@ -1,30 +1,33 @@
+<%@page import="shop.dto.Ship"%>
 <%@page import="shop.dao.ProductRepository"%>
 <%@page import="java.util.List"%>
 <%@page import="shop.dto.Product"%>
+<%@ include file="/layout/meta.jsp"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-	<meta charset="UTF-8">
-	<title>Shop</title>
-	<jsp:include page="/layout/meta.jsp" />
-	<jsp:include page="/layout/link.jsp" />
-</head>
-<body>   
+
+<%
+    request.setCharacterEncoding("UTF-8");
+
+    String name = request.getParameter("name");
+    String shippingDate = request.getParameter("shippingDate");
+    String country = request.getParameter("country");
+    String zipCode = request.getParameter("zipCode");
+    String address = request.getParameter("addressName");
+    String phone = request.getParameter("phone");
 	
-	<jsp:include page="/layout/header.jsp" />
-	<!-- #################### contents ########################## -->
+    // 세션에 저장
+    Ship ship = Ship.builder().shipName(name)
+    						  .date(shippingDate)
+    						  .country(country)
+    						  .zipCode(zipCode)
+    						  .address(address)
+    						  .phone(phone)
+							  .build();	    						  
 	
-			
-	
-	<!-- #################### contents ########################## -->
-	<jsp:include page="/layout/footer.jsp" />
-	<jsp:include page="/layout/script.jsp" />
-</body>
-</html>
-
-
-
-
+    session.setAttribute("ship", ship);
+   
+    /* response.sendRedirect("order.jsp"); */
+    response.sendRedirect(root + "/shop/order.jsp");
+%>
 

@@ -23,15 +23,50 @@
 		// 주문 내역 목록을 세션에서 가져오기
 		
 		// 회원인 경우
-    boolean login = (session.getAttribute("loginUser") != null);
+//     boolean login = session.getAttribute("loginUser") != null ? true : false;
+
+//     List<Product> orderList = (List<Product>) session.getAttribute("orderList");
+//     if(orderList == null) orderList = new ArrayList<>();
+
+//     Integer orderCount = (Integer) session.getAttribute("orderCount");
+//     if(orderCount == null) orderCount = 0;
+
+//     String orderPhone = (String) session.getAttribute("orderPhone");
+    
+//     OrderRepository orderRepository = new OrderRepository();
+//     if(login) {
+//     	orderList = orderRepository.list((String)session.getAttribute("loginId"));
+//     	orderCount = orderList.size();
+//     } else if(orderPhone != null && !orderPhone.isEmpty()) {
+//     	// 이미 orderList, orderCount는 세션에서 불러왔으므로 그대로 사용
+//     } else {
+//     	orderList = new ArrayList<>();
+//     	orderCount = 0;
+//     }
+
+    boolean login = session.getAttribute("loginUser") != null;
 
     List<Product> orderList = (List<Product>) session.getAttribute("orderList");
-    if(orderList == null) orderList = new ArrayList<>();
+    if (orderList == null) orderList = new ArrayList<>();
 
     Integer orderCount = (Integer) session.getAttribute("orderCount");
-    if(orderCount == null) orderCount = 0;
+    if (orderCount == null) orderCount = 0;
 
     String orderPhone = (String) session.getAttribute("orderPhone");
+
+    if (login) {
+        // 로그인한 경우에는 DB에서 최신 주문 내역 조회
+        OrderRepository orderRepository = new OrderRepository();
+        String userId = (String) session.getAttribute("loginId");
+        orderList = orderRepository.list(userId);
+        orderCount = orderList.size();
+
+        // 세션에도 다시 저장 (옵션)
+        session.setAttribute("orderList", orderList);
+        session.setAttribute("orderCount", orderCount);
+    }
+
+
 %>
 
 		

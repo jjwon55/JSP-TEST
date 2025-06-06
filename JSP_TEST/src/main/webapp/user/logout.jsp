@@ -1,7 +1,9 @@
 <%@page import="shop.dao.UserRepository"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%	
+<%
+    // 1. 세션 무효화
+    session.invalidate();  // 현재 사용자 세션 정보를 모두 삭제
 	// 자동 로그인, 토큰 쿠키 삭제
 	
 	// 세션 무효화?
