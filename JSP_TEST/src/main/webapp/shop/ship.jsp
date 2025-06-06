@@ -11,64 +11,11 @@
 	<jsp:include page="/layout/meta.jsp" />
 	<jsp:include page="/layout/link.jsp" />
 </head>
+<% String root = request.getContextPath(); %>
 <body>   
 	
 	<jsp:include page="/layout/header.jsp" />
 	<!-- #################### contents ########################## -->
-	
-  <div class="container-fluid">
-    <a class="navbar-brand" href="/">Home</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="/shop/products.jsp">Product</a>
-        </li>
-      </ul>
-       <ul class="navbar-nav d-flex align-items-center px-3">
-       	
-        <!-- 로그인 시 -->
-<!--         <li class="nav-item"> -->
-
-<!--         </li> -->
-        <li class="nav-item">
-        <div class="dropdown">
-	      <a href="#" class="d-flex align-items-center link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-	        <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
-	        <strong>user</strong>
-	      </a>
-	      <ul class="dropdown-menu text-small shadow">
-	        <li><a class="dropdown-item" href="/user/index.jsp">마이 페이지</a></li>
-	        <li><a class="dropdown-item" href="/user/update.jsp">회원정보 수정</a></li>
-	        <li><a class="dropdown-item" href="/user/order.jsp">주문내역</a></li>
-	        <li><hr class="dropdown-divider"></li>
-	        <li><a class="dropdown-item" href="/user/logout.jsp">로그아웃</a></li>
-	      </ul>
-	    </div>
-        </li>
-        
-        
-<!--         <li class="nav-item"> -->
-
-<!--         </li> -->
-        
-        <li class="nav-item">
-	        <a class="nav-link position-relative" aria-current="page" href="/shop/cart.jsp">
-	        	<i class="material-symbols-outlined">shopping_bag</i>
-	        	<span class="cart-count">1</span>
-	        </a>
-        </li>
-      </ul>
-      <form class="d-flex" role="search" action="/shop/products.jsp" method="get">
-        <input class="form-control me-2" type="search" name="keyword" placeholder="Search" aria-label="Search" value="">
-        <button class="btn btn-outline-success" type="submit">Search</button>
-      </form>
-    </div>
-  </div>
-</nav>
-
 
 	<div class="px-4 py-5 my-5 text-center">
 		<h1 class="display-5 fw-bold text-body-emphasis">배송 정보</h1>
@@ -108,7 +55,7 @@
 				<div class="item">
 					<a href="cart.jsp" class="btn btn-lg btn-success">이전</a>
 					<!-- 취소 프로세스는 이어서... -->				
-					<a href="/" class="btn btn-lg btn-danger">취소</a>				
+					<a href="<%= root %>/index.jsp" class="btn btn-lg btn-danger">취소</a>				
 				</div>
 				<div class="item">
 					<input type="submit" class="btn btn-lg btn-primary" value="등록">

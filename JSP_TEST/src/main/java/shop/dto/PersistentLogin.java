@@ -2,6 +2,14 @@ package shop.dto;
 
 import java.util.Date;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+
+
+@Data
+@AllArgsConstructor
+@Builder
 public class PersistentLogin {
     private int pNo;
     private String userId;

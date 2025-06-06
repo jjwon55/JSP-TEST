@@ -1,28 +1,31 @@
+<%@page import="shop.dao.UserRepository"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
-    String root = request.getContextPath();
-    String path = request.getPathInfo();
+    // 1. 세션 무효화
+    session.invalidate();  // 현재 사용자 세션 정보를 모두 삭제
 
-    if ("/logout".equals(path)) {
-        System.out.println("로그아웃...");
+    // 2. 자동 로그인 쿠키 제거 (브라우저 쿠키에서 제거)
+    Cookie autoCookie = new Cookie("autoLoginToken", "");
+    autoCookie.setMaxAge(0); // 쿠키를 즉시 만료시키기
+    autoCookie.setPath("/"); // 경로 설정 (사이트 전체에 적용)
+    response.addCookie(autoCookie); // 브라우저에 전달하여 삭제
 
-        // 자동 로그인 토큰 쿠키 삭제
-        Cookie[] cookies = request.getCookies();
-        if (cookies != null) {
-            for (Cookie c : cookies) {
-                if ("autoLoginToken".equals(c.getName())) {
-                    c.setMaxAge(0); // 삭제
-                    c.setPath("/"); // 경로 설정 중요
-                    response.addCookie(c);
+    // 3. DB에서 자동 로그인 토큰 제거
+    Cookie[] cookies = request.getCookies();
+    if (cookies != null) {
+        for (Cookie c : cookies) {
+            if ("autoLoginToken".equals(c.getName())) {
+                String token = c.getValue();
+                if (token != null && !token.isEmpty()) {
+                    UserRepository repo = new UserRepository();
+                    repo.deleteToken(token); // DB에서 토큰 제거
                 }
+                break;
             }
         }
-
-        // 세션 무효화
-        session.invalidate();
-
-        // 홈으로 리다이렉트
-        response.sendRedirect(root + "/index");
     }
+
+    // 4. 로그아웃 후 로그인 페이지로 이동
+    response.sendRedirect("login.jsp");
 %>

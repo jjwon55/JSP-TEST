@@ -1,8 +1,21 @@
+<%@page import="shop.dto.Ship"%>
 <%@page import="shop.dao.ProductRepository"%>
 <%@page import="java.util.List"%>
 <%@page import="shop.dto.Product"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
+    
+ <% 
+ 	String loginId = (String) session.getAttribute("loginId");
+ 	Ship ship = (Ship)session.getAttribute("ship");
+    List<Product> cartList = (List<Product>) session.getAttribute("cartList");
+    int total=0;
+	int count=0;
+ %>   
+    
+    
+    
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,117 +25,113 @@
 	<jsp:include page="/layout/link.jsp" />
 </head>
 <body>   
-	
 	<jsp:include page="/layout/header.jsp" />
 	<!-- #################### contents ########################## -->
+
+	<div class="px-4 py-5 my-5 text-center">
+		<h1 class="display-5 fw-bold text-body-emphasis">주문 정보</h1>
+	</div>
 	
-  <div class="container-fluid">
-    <a class="navbar-brand" href="/">Home</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="/shop/products.jsp">Product</a>
-        </li>
-      </ul>
-       <ul class="navbar-nav d-flex align-items-center px-3">
-       	
-       	<!-- 비로그인 시 -->
-        <li class="nav-item">
-          <a class="nav-link" aria-current="page" href="/user/login.jsp">로그인</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" aria-current="page" href="/user/join.jsp">회원가입</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" aria-current="page" href="/user/order.jsp">주문내역</a>
-        </li>
-        
-        <li class="nav-item">
-	        <a class="nav-link position-relative" aria-current="page" href="/shop/cart.jsp">
-	        	<i class="material-symbols-outlined">shopping_bag</i>
-	        	<span class="cart-count">0</span>
-	        </a>
-        </li>
-      </ul>
-      <form class="d-flex" role="search" action="/shop/products.jsp" method="get">
-        <input class="form-control me-2" type="search" name="keyword" placeholder="Search" aria-label="Search" value="">
-        <button class="btn btn-outline-success" type="submit">Search</button>
-      </form>
-    </div>
-  </div>
-
-
-
-
-
-	
-	<div class="row m-0 mypage">
-		<div class="sidebar border border-right col-md-3 col-lg-2 p-0 bg-body-tertiary">
-			<div class="d-flex flex-column flex-shrink-0 p-3 bg-body-tertiary">
-			    <ul class="nav nav-pills flex-column mb-auto">
-			      <!-- 로그인 시 -->
-			      
-			      
-			      <li>
-			        <a href="#" class="nav-link active" aria-current="page">
-			          주문내역
-			        </a>
-			      </li>
-			    </ul>
-			    <hr>
-			  </div>
+	<!-- 주문 확인 영역 -->
+	<div class="container order mb-5">
+		<form action="complete.jsp" method="post">
+		<!-- 배송정보 -->
+		<div class="ship-box">
+			<table class="table ">
+				<tbody><tr>
+					<td>주문 형태 :</td>
+					<td><%= loginId != null ? "회원 주문" : "비회원 주문" %></td>
+				</tr>
+				<tr>
+				    <td>성 명 :</td>
+				    <td><%= ship.getShipName() %></td>
+				</tr>
+				<tr>
+				    <td>우편번호 :</td>
+				    <td><%= ship.getZipCode() %></td>
+				</tr>
+				<tr>
+				    <td>주소 :</td>
+				    <td><%= ship.getAddress() %></td>
+				</tr>
+				<tr>
+				    <td>배송일 :</td>
+				    <td><%= ship.getDate() %></td>
+				</tr>
+				<tr>
+				    <td>전화번호 :</td>
+				    <td><%= ship.getPhone() %></td>
+				</tr>
+				<%if(loginId == null) { %>
+				<tr>
+					<td>주문 비밀번호 :</td>
+					<td>
+						<input type="password" class="form-control" name="orderPw">
+					</td>
+				</tr>
+				<%} %>
+			</tbody></table>
 		</div>
 		
-		<div class="col-md-9 ms-sm-auto col-lg-10 p-0 m-0">
-			<div class="px-4 py-3 my-3 text-center">
-				<h1 class="display-5 fw-bold text-body-emphasis">주문 내역</h1>
-				<div class="col-lg-6 mx-auto">
-						
-						<p class="lead mb-4">비회원 주문하신 경우, 전화번호와 주문 비밀번호를 입력해주세요.</p>
-					
-				</div>
-			</div>
-			
-			<!-- 주문 내역 영역 -->
-			<div class="container shop m-auto mb-5">
-					<form action="/user/order_pro.jsp" method="post">
-					
-						<div class="mb-5">
-							<table class="table">
-								<tbody><tr>
-									<td>전화번호 :</td>
-									<td>
-										<input type="text" class="form-control" name="phone" placeholder="- 생략하고 숫자만 입력해주세요.">
-									</td>
-								</tr>
-								<tr>
-									<td>주문 비밀번호 :</td>
-									<td>
-										<input type="password" class="form-control" name="orderPw" placeholder="주문 비밀번호를 입력해주세요.">
-									</td>
-								</tr>
-							</tbody></table>
-							<div class="btn-box d-grid gap-2">
-								<button type="submit" class="btn btn-outline-primary btn-lg px-4 gap-3">조회</button>
-							</div>
-						</div>
-					
-					</form>
-				
-			</div>
-			
-			
-<footer class="container p-5">
-	<p class="text-center">Copyright ⓒ ALOHA CLASS. All Rights Reserved</p>
-</footer>
+		<!-- 주문목록 -->
+		<div class="cart-box">
+			<table class="table table-striped table-hover table-bordered text-center align-middle">
+				<thead>
+					<tr class="table-primary">
+						<th>상품</th>
+						<th>가격</th>
+						<th>수량</th>
+						<th>소계</th>
+						<th>비고</th>
+					</tr>
+				</thead>
+				<tbody>
+					<% for(Product cart : cartList) {%>
+					<% 
+						int subTotal = cart.getUnitPrice() * cart.getQuantity();
+						total += subTotal;
+						count += cart.getQuantity();
+					%>
+					<tr>
+						<td><%= cart.getName() %></td>
+						<td><%= cart.getUnitPrice() %></td>
+						<td><%= cart.getQuantity() %></td>
+						<td><%= subTotal %></td>			
+					</tr>
+					<% } %>
+				</tbody>
+				<tfoot>
+					<tr>
+						<td></td>
+						<td></td>
+						<td>총액</td>
+						<td><%= total %></td>
+					</tr>
+				</tfoot>
+			</table>
+	
 		</div>
+		
+		<!-- 버튼 영역 -->
+		<div class="d-flex justify-content-between mt-5 mb-5">
+			<div class="item">
+				<a href="ship.jsp" class="btn btn-lg btn-success">이전</a>
+				<!-- 취소 프로세스는 이어서... -->				
+				<a href="" class="btn btn-lg btn-danger">취소</a>				
+			</div>
+			<div class="item">
+				<input type="hidden" name="login" value="false">
+				<input type="hidden" name="totalPrice" value="40000">
+				<input type="submit" class="btn btn-lg btn-primary" value="주문완료">	
+			</div>
+		</div>
+		</form>
 	</div>
 	
 	
-	
+<footer class="container p-5">
+	<p class="text-center">Copyright ⓒ ALOHA CLASS. All Rights Reserved</p>
+</footer>
 	
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
 <!-- <script src="../static/js/validation.js"></script> -->			<!-- 상대경로 -->
@@ -130,63 +139,6 @@
 <script src="/static/js/validation.js"></script>
 
 
-
-
-
-	
-	
-
-	<script>
-		
-		let form = document.updateForm
-		
-		// 성별 선택
-		let tempGender = document.getElementById('temp-gender')
-		let radioFemale = document.getElementById('gender-female')
-		let radioMale = document.getElementById('gender-male')
-		// alert(tempGender.value)
-		if( tempGender.value == '남' )		radioMale.checked = true
-		if( tempGender.value == '여' )		radioFemale.checked = true
-		
-		
-		// 생일 월 (select) 선택
-		let tempMonth = document.getElementById('temp-month')
-		let selectMonth = form.month
-		selectMonth.value = tempMonth.value
-		
-		
-		// 메일 도메인 (select) 선택
-		let tempEmail2 = document.getElementById('temp-email2')
-		let selectEmail2 = form.email2
-		selectEmail2.value = tempEmail2.value
-		
-		
-		// 탈퇴 체크
-		function alertDel() {
-
-			let form = document.updateForm
-
-			let check = confirm('정말 탈퇴하시겠습니까?')
-
-			if( check ) {
-				form.action = 'delete.jsp'
-				form.submit()
-			}
-
-		}
-	
-	</script>
-
-
-
-
-
-
-
-
-
-
-	
 	<!-- #################### contents ########################## -->
 	<jsp:include page="/layout/footer.jsp" />
 	<jsp:include page="/layout/script.jsp" />

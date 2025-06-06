@@ -2,6 +2,10 @@ package shop.dto;
 
 import java.io.Serializable;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+
 /**
  * Product 자바빈즈
  * - 상품 아이디
@@ -13,6 +17,10 @@ import java.io.Serializable;
  * - 재고 수
  * - 상태(condition)
  */
+
+@Data
+@AllArgsConstructor
+@Builder
 public class Product implements Serializable {
 
 	private static final long serialVersionUID = 1L;

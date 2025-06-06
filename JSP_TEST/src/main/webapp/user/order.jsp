@@ -23,7 +23,7 @@
 		// 주문 내역 목록을 세션에서 가져오기
 		
 		// 회원인 경우
-    boolean login = (session.getAttribute("loginUser") != null);
+    boolean login = session.getAttribute("loginUser") != null ? true : false;
 
     List<Product> orderList = (List<Product>) session.getAttribute("orderList");
     if(orderList == null) orderList = new ArrayList<>();

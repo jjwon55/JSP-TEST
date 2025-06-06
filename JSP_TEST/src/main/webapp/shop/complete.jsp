@@ -1,8 +1,103 @@
+<%@page import="shop.dto.Order"%>
+<%@page import="java.util.UUID"%>
+<%@page import="shop.dto.Ship"%>
+<%@page import="shop.dao.ProductIORepository"%>
+<%@page import="shop.dao.OrderRepository"%>
 <%@page import="shop.dao.ProductRepository"%>
 <%@page import="java.util.List"%>
 <%@page import="shop.dto.Product"%>
+<%@ include file="/layout/meta.jsp" %>
+<%@ include file="/layout/link.jsp" %>
+<%@ page import="java.time.LocalDate"%>
+<%@ page import="java.sql.Date"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+ 
+
+<%
+	Ship ship = (Ship)session.getAttribute("ship");
+	String loginId = (String)session.getAttribute("loginId");
+	List<Product> list = (List<Product>)session.getAttribute("cartList");
+	OrderRepository orderRepository = new OrderRepository();
+	ProductRepository productRepository = new ProductRepository();
+	ProductIORepository productIoRepository = new ProductIORepository();
+	String cartId = UUID.randomUUID().toString();
+	
+	if (ship == null || list == null || list.isEmpty()) {
+        response.sendRedirect("ship.jsp");
+        return;
+    }
+	
+	
+	int total = 0;
+
+    for (Product cart : list) {
+		int subTotal = cart.getUnitPrice() * cart.getQuantity();
+		total += subTotal;
+    }
+	
+	Order order = null;
+	String orderPw = request.getParameter("orderPw");
+	if(orderPw != null && !orderPw.equals("")) {
+		order = Order.builder().cartId(cartId)
+							   .shipName(ship.getShipName())
+							   .zipCode(ship.getZipCode())
+							   .country(ship.getCountry())
+							   .address(ship.getAddress())
+							   .orderPw(orderPw)
+							   .totalPrice(total)
+							   .phone(ship.getPhone())
+							   .build();
+							   
+		orderRepository.insert(order);
+	
+		
+
+
+		int orderNo = orderRepository.lastOrderNo(ship.getPhone(), orderPw);
+		for(Product cartList : list) {
+			Product product = Product.builder()
+									 .productId(cartList.getProductId())
+									 .quantity(cartList.getQuantity())
+									 .type("판매")
+									 .build();
+			
+			productIoRepository.insert(product);
+		}
+	} else {
+		order = Order.builder().cartId(cartId)
+						       .shipName(ship.getShipName())
+				   		       .zipCode(ship.getZipCode())
+						       .country(ship.getCountry())
+						       .address(ship.getAddress())
+						       .totalPrice(total)
+						       .userId(loginId)
+						       .build();
+
+				orderRepository.insert(order);
+				
+				int orderNo = orderRepository.lastOrderNo((String)session.getAttribute("loginId"));
+					for(Product cartList : list) {
+						Product product = Product.builder().productId(cartList.getProductId())
+														   .quantity(cartList.getQuantity())
+														   .type("판매") 
+														   .userId((String)session.getAttribute("loginId"))
+														   .build();
+							
+						productIoRepository.insert(product);
+					}
+	}		
+			
+	list.clear();
+	session.removeAttribute("cartList");
+    session.removeAttribute("ship");
+
+	
+%>
+
+
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,16 +122,16 @@
 			<table class="table ">
 				<tbody><tr>
 					<td>주문번호 :</td>
-					<td>61199890051986FB7A5F557C5E620502</td>
+					<td><%= cartId %></td>
 				</tr>
 				<tr>
 					<td>배송지 :</td>
-					<td>asdf</td>
+					<td><%= ship.getAddress() %></td>
 				</tr>
 			</tbody></table>
 			
 			<div class="btn-box d-flex justify-content-center">
-				<a href="/user/order.jsp" class="btn btn-primary btn-lg px-4 gap-3">주문내역</a>
+				<a href="<%= root %>/user/order.jsp" class="btn btn-primary btn-lg px-4 gap-3">주문내역</a>
 			</div>
 		</div>
 	</div>
