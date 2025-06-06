@@ -59,7 +59,7 @@
 			Product product = Product.builder()
 									 .productId(cartList.getProductId())
 									 .quantity(cartList.getQuantity())
-									 .type("판매")
+									 .type("OUT")
 									 .build();
 			
 			productIoRepository.insert(product);
@@ -80,7 +80,7 @@
 					for(Product cartList : list) {
 						Product product = Product.builder().productId(cartList.getProductId())
 														   .quantity(cartList.getQuantity())
-														   .type("판매") 
+														   .type("OUT") 
 														   .userId((String)session.getAttribute("loginId"))
 														   .build();
 							

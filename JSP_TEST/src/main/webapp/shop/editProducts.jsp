@@ -47,9 +47,9 @@
                             <p class="text-end price">₩ <%= p.getUnitPrice() %></p>
                             <p class="d-flex justify-content-between">
                                <!-- [NEW] 수정 버튼으로 변경 -->
-								<a href="./update.jsp?id=P100001" class="btn btn-primary mx-2">수정</a>
+								<a href="./update.jsp?id=<%= p.getProductId() %>" class="btn btn-primary mx-2">수정</a>
 								<!-- [NEW] 삭제 버튼 추가 -->
-								<a href="javascript:;" class="btn btn-danger mx-2" onclick="deleteProduct('P100001')">삭제</a>
+								<a href="javascript:;" class="btn btn-danger mx-2" onclick="deleteProduct('<%= p.getProductId() %>')">삭제</a>
                             </p>
                         </div>
                     </div>
@@ -68,21 +68,15 @@
 <!-- <script src="../static/js/validation.js"></script> -->			<!-- 상대경로 -->
 	<!-- 절대경로 -->
 <script src="/static/js/validation.js"></script>
-	
-	
-	<script>
-		
-		function deleteProduct(productId) {
-			// alert(productId)
-			let check = confirm('정말로 삭제하시겠습니까?')
-			if( check ) {
-				location.href = 'delete_pro.jsp?id=' + productId
-			} 
-		}
-		
-	
-	
-	</script>
+<script>
+	function deleteProduct(productId) {
+		// alert(productId)
+		let check = confirm('정말로 삭제하시겠습니까?')
+		if( check ) {
+			location.href = 'delete_pro.jsp?id=' + productId
+		} 
+	}
+</script>
 
 	<!-- #################### contents ########################## -->
 	<jsp:include page="/layout/footer.jsp" />

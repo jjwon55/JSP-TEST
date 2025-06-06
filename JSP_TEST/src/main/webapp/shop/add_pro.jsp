@@ -27,7 +27,7 @@
     }
 
     // 파라미터 수집
-    String productId = request.getParameter("product_id");
+    String productId = request.getParameter("productId");
     String name = request.getParameter("name");
 
     int unitPrice = 0;

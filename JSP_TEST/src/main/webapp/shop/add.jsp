@@ -13,7 +13,7 @@
 <div class="container my-5">
 	<h1 class="text-center">상품 등록</h1>
 
-	<form action="add_pro.jsp" method="post" enctype="multipart/form-data">
+	<form action="./add_pro.jsp" method="post" onsubmit="return checkProduct()" enctype="multipart/form-data">
 		<!-- 이미지 -->
 		<div class="mb-3">
 			<label class="form-label">상품 이미지</label>
@@ -80,5 +80,6 @@
 
 <jsp:include page="/layout/footer.jsp" />
 <jsp:include page="/layout/script.jsp" />
+<script src="/static/js/validation.js"></script>
 </body>
 </html>
