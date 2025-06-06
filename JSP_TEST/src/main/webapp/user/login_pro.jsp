@@ -29,11 +29,13 @@
 	String rememberId = request.getParameter("rememberId");
 	if ("on".equals(rememberId)) {
 		Cookie idCookie = new Cookie("rememberId", URLEncoder.encode(id, "UTF-8"));
-		idCookie.setMaxAge(60 * 60 * 24 * 7); // 7일 유지
+		idCookie.setMaxAge(60 * 60 * 24 * 1); // 1일 유지
+		idCookie.setPath("/");
 		response.addCookie(idCookie);
 	} else {
 		Cookie idCookie = new Cookie("rememberId", "");
 		idCookie.setMaxAge(0); // 삭제
+		idCookie.setPath("/");
 		response.addCookie(idCookie);
 	}
 	
@@ -42,9 +44,10 @@
 	if ("on".equals(autoLogin)) {
 		String token = UUID.randomUUID().toString();
 		Cookie autoCookie = new Cookie("autoLoginToken", token);
-		autoCookie.setMaxAge(60 * 60 * 24 * 7); // 7일 유지
+		autoCookie.setMaxAge(60 * 60 * 24 * 1); // 1일 유지
 		response.addCookie(autoCookie);
 	}
+	
 	// 쿠키 전달
 	
 	// 로그인 성공 페이지로 이동

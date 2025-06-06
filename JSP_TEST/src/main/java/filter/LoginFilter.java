@@ -21,7 +21,7 @@ import shop.dto.User;
 /**
  * Servlet Filter implementation class LoginFilter
  */
-@WebFilter("/LoginFilter")
+@WebFilter("/*")
 public class LoginFilter extends HttpFilter implements Filter {
 	
 	private static final long serialVersionUID = 1L;
