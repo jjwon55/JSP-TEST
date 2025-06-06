@@ -112,22 +112,21 @@ public class UserRepository extends JDBConnection {
 	 */
 	public int update(User user) {
 		int result = 0;
-	    String sql = "UPDATE user SET password=?, name=?, gender=?, birth=?, mail=?, phone=?, address=? WHERE id=?";
-	    try {
-	        psmt = con.prepareStatement(sql);
-	        psmt.setString(1, user.getPassword());
-	        psmt.setString(2, user.getName());
-	        psmt.setString(3, user.getGender());
-	        psmt.setString(4, user.getBirth());
-	        psmt.setString(5, user.getMail());
-	        psmt.setString(6, user.getPhone());
-	        psmt.setString(7, user.getAddress());
-	        psmt.setString(8, user.getId());
-	        result = psmt.executeUpdate();
-	    } catch (SQLException e) {
-	        System.err.println("회원 정보 수정 중 오류 발생!");
-	        e.printStackTrace();
-	    }
+		String sql = "UPDATE user SET name=?, gender=?, birth=?, mail=?, phone=?, address=? WHERE id=?";
+		try {
+		    psmt = con.prepareStatement(sql);
+		    psmt.setString(1, user.getName());
+		    psmt.setString(2, user.getGender());
+		    psmt.setString(3, user.getBirth());
+		    psmt.setString(4, user.getMail());
+		    psmt.setString(5, user.getPhone());
+		    psmt.setString(6, user.getAddress());
+		    psmt.setString(7, user.getId()); 
+		    result = psmt.executeUpdate();
+		} catch (SQLException e) {
+		    System.err.println("회원 정보 수정 중 오류 발생!");
+		    e.printStackTrace();
+		}
 	    return result;
 	}
 
