@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import shop.dto.PersistentLogin;
 import shop.dto.User;
+import shop.dto.Product;
 
 public class UserRepository extends JDBConnection {
 	

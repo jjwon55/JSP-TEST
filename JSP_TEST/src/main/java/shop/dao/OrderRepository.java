@@ -134,6 +134,9 @@ public class OrderRepository extends JDBConnection {
 	            product.setUnitPrice(rs.getInt("unit_price"));     // 단가
 	            product.setQuantity(rs.getInt("amount"));          // 주문 수량
 	            list.add(product);
+	            System.out.println(">>> SQL 실행 전");
+	            System.out.println("list size: " + list.size());
+
 	        }
 	    } catch (SQLException e) {
 	        e.printStackTrace();
@@ -199,10 +202,14 @@ public class OrderRepository extends JDBConnection {
 	            product.setUnitPrice(rs.getInt("unit_price"));     // 단가
 	            product.setQuantity(rs.getInt("amount"));          // 주문 수량
 	            list.add(product);
+
 	        }
 	    } catch (SQLException e) {
 	        e.printStackTrace();
 	    }
+	    System.out.println(">>> SQL 실행 전");
+	    System.out.println("phone: " + phone + ", pw: " + orderPw);
+	    System.out.println("list size: " + list.size());
 	    return list;
 	}
 	

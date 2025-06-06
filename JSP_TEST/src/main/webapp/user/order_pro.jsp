@@ -10,6 +10,8 @@
 // 1. 파라미터 받기
 String phone = request.getParameter("phone");
 String orderPw = request.getParameter("orderPw");
+System.out.println("phone: " + phone);
+System.out.println("orderPw: " + orderPw);
 
 // 2. DAO 생성
 OrderRepository orderRepo = new OrderRepository();
@@ -30,7 +32,6 @@ if (orderList != null && !orderList.isEmpty()) {
     session.setAttribute("orderPhone", null);
     session.setAttribute("orderError", "입력한 정보와 일치하는 주문 내역이 없습니다.");
 }
-
 // 5. 결과 페이지로 리디렉션
 response.sendRedirect(root + "/user/order.jsp");
 	

@@ -58,6 +58,7 @@
 		for(Product cartList : list) {
 			Product product = Product.builder()
 									 .productId(cartList.getProductId())
+									 .orderNo(orderNo)
 									 .quantity(cartList.getQuantity())
 									 .type("OUT")
 									 .build();
@@ -79,6 +80,7 @@
 				int orderNo = orderRepository.lastOrderNo((String)session.getAttribute("loginId"));
 					for(Product cartList : list) {
 						Product product = Product.builder().productId(cartList.getProductId())
+														   .orderNo(orderNo)
 														   .quantity(cartList.getQuantity())
 														   .type("OUT") 
 														   .userId((String)session.getAttribute("loginId"))
